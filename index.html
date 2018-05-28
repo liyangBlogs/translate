@@ -1,0 +1,21 @@
+<li class="language-sel">
+  <a role='button' (click)="selectLang('zh')" class='l zh'>中文</a>
+  <a class='split'>|</a>
+  <a role='button' (click)="selectLang('en')" class='l en'>English</a>
+   <a class='split'>|</a>
+  <a role='button' (click)="selectLang('jp')" class='l en'>日文</a> 
+</li>
+
+//ts文件中
+import { StaticTranslateService } from '../../translate.service';
+
+constructor() {
+  let urlTree = this.router.parseUrl(this.location.path(true));
+  StaticTranslateService.appLang = urlTree.queryParams["lang"];
+}
+selectLang(lang: string) {
+  let urlTree = this.router.parseUrl(this.location.path(true));
+  if (urlTree.queryParams["lang"] === lang) return;
+  urlTree.queryParams["lang"] = lang;
+  document.location.href = urlTree.toString();
+}
